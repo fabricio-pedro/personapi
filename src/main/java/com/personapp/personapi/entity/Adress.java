@@ -1,2 +1,4 @@
-package com.personapp.personapi.entity;public class Adress {
+package com.personapp.personapi.entity;
+
+public class Adress {
 }
