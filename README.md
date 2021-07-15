@@ -16,7 +16,7 @@ Deve ser observar que o projeto esta configurado para perfil de desenvolvimento 
 Deve se lembrar de criar antes o arquivo applications-prod.properties e escrever algumas propriedades para o banco de
 dados desejado bem definir no pom as dependencias do banco de dados.
 
-As tecnologias utilizadas neste projeto são:\
+As tecnologias utilizadas neste projeto são:
 * Spring Boot
 * Spring Data JPA
 * Spring Boot DevTools
