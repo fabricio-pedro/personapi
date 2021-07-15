@@ -2,16 +2,13 @@ package com.personapp.personapi.controllers;
 
 import com.personapp.personapi.dtos.request.PersonDTO;
 import com.personapp.personapi.dtos.response.MessageResponse;
-import com.personapp.personapi.enums.Type;
 import com.personapp.personapi.services.PersonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/people")
@@ -24,10 +21,8 @@ public class PersonController {
     }
 
     @GetMapping
-   public List<String> createPerson(){
-       return Arrays.stream(Type.values()).
-                map((t->t.getType()))
-                 .collect(Collectors.toList());
+    public ResponseEntity<List<PersonDTO>> listPeople(){
+       return ResponseEntity.ok(this.personService.listAll());
     }
 
    @PostMapping
@@ -35,6 +30,22 @@ public class PersonController {
       return ResponseEntity.status(HttpStatus.CREATED).body(personService.save(personDTO));
   }
 
+  @DeleteMapping(path = "{id}")
+  public ResponseEntity<Void> deleteById(@PathVariable Long id){
+      MessageResponse messageResponse = this.personService.removePerson(id);
+      return ResponseEntity.noContent().build();
+
+  }
+ @PutMapping(path="/{id}")
+ public ResponseEntity<MessageResponse> updatePerson(@PathVariable Long id,@RequestBody @Valid PersonDTO personDTO){
+      MessageResponse messageResponse=this.personService.updatePerson(id,personDTO);
+      return ResponseEntity.ok(messageResponse);
+ }
+
+  @GetMapping(path = "/{id}")
+  public ResponseEntity<PersonDTO> findPerson( @PathVariable Long id){
+   return ResponseEntity.ok(this.personService.getPerson(id));
+  }
 
 
 }
